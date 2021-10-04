@@ -5,7 +5,6 @@ const ikRockArrowFunctions = () => {
 
 ikRockArrowFunctions () 
 
-
 //deel B 
 const fivePlusSeven = () => 5 + 7 
 
