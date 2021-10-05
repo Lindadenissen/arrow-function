@@ -1,3 +1,5 @@
+//Dit is een oefening
+
 //deel A
 const ikRockArrowFunctions = () => {
   console.log ("Joe, ik rock de arrow functions!")
