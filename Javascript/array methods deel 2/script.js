@@ -5,7 +5,7 @@ const superheroes = [
   
   // Hier komt jouw functie
   var findSpiderMan = superheroes.find (function(element){
-    return element.name == "Spiderman"
+    return element.name == "Spiderman";
   })
 
     
