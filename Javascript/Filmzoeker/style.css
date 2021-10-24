@@ -55,46 +55,12 @@ img {
   padding: 30px;
 }
 
-@media (min-width: 768px) {
-  #movie__list {
-    display: -ms-grid;
-    display: grid;
-    height: 100%;
-    grid-column-gap: 10em;
-    -ms-grid-columns: 200px auto;
-    grid-template-columns: 200px auto;
-  }
-}
-
-@media (min-width: 1024px) {
-  #movie__list {
-    display: -ms-grid;
-    display: grid;
-    height: 100%;
-    grid-column-gap: 9em;
-    -ms-grid-columns: 200px 200px auto;
-    grid-template-columns: 200px 200px auto;
-  }
-}
-
 @media (min-width: 1440px) {
   #movie__list {
-    display: -ms-grid;
     display: grid;
     height: 100%;
     grid-column-gap: 10em;
     -ms-grid-columns: 200px 200px 200px auto;
     grid-template-columns: 200px 200px 200px auto;
-  }
-}
-
-@media (min-width: 1800px) {
-  #movie__list {
-    display: -ms-grid;
-    display: grid;
-    height: 100%;
-    grid-column-gap: 10em;
-    -ms-grid-columns: 200px 200px 200px 200px auto;
-    grid-template-columns: 200px 200px 200px 200px auto;
   }
 }
