@@ -1,60 +1,63 @@
-let addMovieToDom = (movies) => {
+const concatUrlAndId = (imdbIDinMovie) => {
+  const urlMovies = `https://www.imdb.com/title/`;
+  return urlMovies.concat(imdbIDinMovie);
+};
+
+const addMovieToDom = (movies) => {
   document.getElementById("movie__list").innerHTML = '';
   movies.forEach(element => {
-    var listItem = document.createElement("li");
-    var link = document.createElement("a");
+    const listItem = document.createElement("li");
+    const link = document.createElement("a");
     link.href = concatUrlAndId(element.imdbID);
-    var image = document.createElement("img");
+    const image = document.createElement("img");
     image.src = element.Poster;
     image.alt = "afbeelding van de film " + element.Title;
     childLi = document.getElementById("movie__list").appendChild(listItem);
     childA = childLi.appendChild(link);
-    childImage = childA.appendChild(image)
+    childImage = childA.appendChild(image);
   })
 };
 
+//alle posters zichtbaar bij laden pagina
+addMovieToDom(movies);
+
 // event aan radiobuttons
-let filteredMovies = document.getElementsByName("film-filter");
-filteredMovies.forEach(movie => {
+let filteredMovieButtons = document.getElementsByName("film-filter");
+filteredMovieButtons.forEach(movie => {
   movie.addEventListener("change", function (event) {
-    handleOnChangeEvent(event);
+    handleFilterMovies(event);
   })
 });
 
 //maak een functie handelOnChangeEvent en switch statement
-let handleOnChangeEvent = (event) => {
+let handleFilterMovies = (event) => {
   switch (event.target.value) {
     case "nieuwste-films":
       filterLatestMovies();
       break;
     case "avengers":
-      filterMovies("Avengers");
+      filterMoviesByValue("Avengers");
       break;
     case "x-men":
-      filterMovies("X-Men");
+      filterMoviesByValue("X-Men");
       break;
     case "princess":
-      filterMovies("Princess");
+      filterMoviesByValue("Princess");
       break;
     case "batman":
-      filterMovies("Batman");
+      filterMoviesByValue("Batman");
       break;
     default:
   }
 };
 
 //functie filterMovies met argument wordInMovieTitle
-let filterMovies = (wordInMovieTitle) => {
+const filterMoviesByValue = (wordInMovieTitle) => {
   addMovieToDom(movies.filter(currentValue => currentValue.Title.includes(wordInMovieTitle)));
 };
 
 //maak functie filterLatestMovies zonder argumenten. 
-let filterLatestMovies = () => {
+const filterLatestMovies = () => {
   addMovieToDom(movies.filter(currentValue => parseInt(currentValue.Year) >= 2014));
-};
-
-let concatUrlAndId = (imdbIDinMovie) => {
-  let urlMovies = `https://www.imdb.com/title/`;
-  return urlMovies.concat(imdbIDinMovie);
 };
 
