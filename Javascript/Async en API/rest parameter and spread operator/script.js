@@ -6,5 +6,5 @@ console.log(addNumber(3, 5, 8, 13));
 //oefening 2 spread operator
 let addThreeNumber = (x, y, z) => x + y + z
 
-let args = [15, 20, 30]
+let args = [15, 20, 50]
 console.log(addThreeNumber(...args));

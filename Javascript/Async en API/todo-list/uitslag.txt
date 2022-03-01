@@ -1,0 +1,199 @@
+API-CLIENT. JS
+
+
+const getTask = function () {
+    return fetch(`https://wincacademydatabase.firebaseio.com/renard.json`)
+        .then(response => response.json())
+}
+
+const patchTask = function (obj) {
+    fetch(`https://wincacademydatabase.firebaseio.com/renard.json`,
+        {
+            method: 'PATCH',
+            body: JSON.stringify(obj)
+        })
+}
+
+const deleteTask = function (id) {
+    fetch(`https://wincacademydatabase.firebaseio.com/renard/${id}.json`,
+        {
+            method: 'DELETE'
+        })
+}
+
+const changeDone = function (id, value) {
+    fetch(`https://wincacademydatabase.firebaseio.com/renard/${id}/done.json`,
+        {
+            method: 'PUT',
+            body: value
+        })
+}
+
+const changeText = function (id, value) {
+    fetch(`https://wincacademydatabase.firebaseio.com/renard/${id}/text.json`,
+        {
+            method: 'PUT',
+            body: JSON.stringify(value)
+        })
+}
+
+SCRIPT.JS
+
+let taskListNode = document.getElementById('task-list');
+let taakId = 1;
+
+const addTask = function () {
+    let newTaskText = document.getElementById('new-task-text');
+    addTaskToDom(newTaskText.value, taakId, false)
+    let obj = {};
+    let objId = 'taak' + taakId
+    obj[objId] = { done: false }
+    obj[objId].text = newTaskText.value;
+    patchTask(obj);
+    taakId = taakId + 1;
+    newTaskText.value = '';
+}
+
+const addTaskToDom = function (newTaskText, id, done) {
+    let newLiElem = document.createElement('li');
+    newLiElem.innerHTML = `<div><input type="checkbox"><label>${newTaskText}</label></div>
+    <img id="taak${id}" src="trash-delete-icon.jpg">`;
+    taskListNode.appendChild(newLiElem);
+    taskListNode.lastChild.querySelector('input').checked = done;
+    taskListNode.lastChild.querySelector('img').addEventListener('click', (event) => {
+        deleteTask(event.target.id);
+        const taak = event.target.parentElement;
+        taak.parentNode.removeChild(taak);
+    });
+    taskListNode.lastChild.querySelector('input').addEventListener('click', (event) => {
+        let checkId = event.target.parentElement.nextSibling.nextSibling.id
+        changeDone(checkId, event.target.checked);
+    });
+    taskListNode.lastChild.querySelector('label').addEventListener('click', (event) => {
+        editTask(event.target);
+    });
+}
+
+const editTask = function (tasklabelNode) {
+    tasklabelNode.innerHTML = `<input type="text"> <button class="add-btn">Voeg toe</button>`;
+    tasklabelNode.querySelector('button')
+        .addEventListener('click', (event) => {
+            let changeId = tasklabelNode.parentElement.nextSibling.nextSibling.id;
+            let newText = tasklabelNode.querySelector('input').value
+            changeText(changeId, newText)
+            tasklabelNode.innerHTML = newText;
+        });
+}
+
+const start = async function () {
+    const tasks = await getTask();
+    let keys = Object.keys(tasks);
+    let keyNumbers = keys.map(item => {
+        return parseInt(item.substring(4));
+    });
+    taakId = 1 + keyNumbers.reduce((acc, item) => {
+        if (acc < item) {
+            return item;
+        } else return acc;
+    });
+    keys.forEach((item, index) => {
+        addTaskToDom(tasks[item].text, keyNumbers[index], tasks[item].done);
+    })
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    start();
+})
+
+INDEX>HTML
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Todo List</title>
+</head>
+
+<body>
+    <main>
+        <h1>ToDo List</h1>
+        <div id="add-task-field">
+            <input type="text" name="new-task" id="new-task-text" placeholder="New Task">
+            <button class="add-btn" onclick="addTask()">Voeg toe</button>
+        </div>
+        <div id="task-list">
+
+        </div>
+
+    </main>
+
+    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript" src="api-client.js"></script>
+</body>
+
+</html>
+© 2022 GitHub, Inc.
+Terms
+
+
+STYLE.CSS
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+    align-items: center;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+}
+
+.add-btn {
+    background-color: #467AB2;
+    color: #fff;
+    padding: 5px;
+    border: 1px solid #467AB2;
+    border-radius: 10%;
+    width: 70px;
+}
+
+#new-task-text {
+    padding: 5px;
+    width: 350px;
+}
+
+#add-task-field {
+    align-self: center;
+    margin-bottom: 40px;
+}
+
+li {
+    display: flex;
+    width: 500px;
+    height: 50px;
+    border: 1px solid darkgrey;
+    list-style: none;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+img {
+    height: 30px;
+}
+
+input[type=checkbox]:checked + label {
+    text-decoration: line-through;
+  }
+
+  button {
+      border: 0px;
+      background-color: #fff;
+  }
+
+

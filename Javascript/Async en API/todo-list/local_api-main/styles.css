@@ -1,0 +1,29 @@
+header{
+  text-align: center;
+  color: rgb(36, 134, 134);
+  font-size: 40px;
+  padding:  10px 50px; 
+}
+
+body{
+  background-color: rgb(207, 204, 204);
+}
+
+.input{
+  width: 150px;
+  height: 30px;
+  font-size: 20px;
+  margin-left: 4rem;
+  
+}
+
+.addItem{
+  font-size: 20px;
+}
+
+ul li{
+  cursor: pointer;
+  position: relative;
+  list-style-type: none;
+}
+

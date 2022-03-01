@@ -1,0 +1,40 @@
+@font-face {
+  font-family: "pokemon";
+  src: url(./font/Pokemon\ Solid.ttf);
+}
+
+body{
+  margin: 0;
+  padding: 0;
+}
+
+#click-btn {
+  margin: 20px;
+  padding: 20px;
+  color: yellow;
+  background: black;
+  font-size: 1em;
+}
+
+.image{
+  width: 250px;
+  height: 250px;
+  margin-left: 20px;
+  display: none;
+}
+
+h1{
+  font-family: "pokemon";
+  font-size: 3em;
+  letter-spacing: 0.3em;
+  margin-left: 40px;
+  display: none;
+  
+}
+
+p{
+  font-family: "pokemon";
+  font-size: 2em;
+  margin-left: 40px;
+  display: none;
+}
